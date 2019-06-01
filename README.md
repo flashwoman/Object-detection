@@ -5,3 +5,6 @@
 
 
 [SOM](http://bl.ocks.org/nbremer/0d2e658691a4f93cad92)
+
+
+<https://m.blog.naver.com/qp_o_qp/221254371979>
