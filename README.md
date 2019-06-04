@@ -8,3 +8,14 @@
 
 
 <https://m.blog.naver.com/qp_o_qp/221254371979>
+
+
+
+뭉치로 자르기
+<http://hk.voidcc.com/question/p-ezrgawjn-gx.html>
+
+사각형으로 잘라서 저장
+<https://sosal.kr/1067>
+
+matplotlib color swatches
+<https://matplotlib.org/users/colormaps.html>
