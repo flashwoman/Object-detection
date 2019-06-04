@@ -46,6 +46,7 @@ def nothing(x):
         upper_blueA3 = np.array([color1, 255, 255])
         #     print(i, 180, 0, i+range-180)
         #     print(i-range, i)
+
     else:
         lower_blueA1 = np.array([color1, saturation_th1, value_th1])
         upper_blueA1 = np.array([color1 + ranges, 255, 255])
@@ -76,6 +77,7 @@ def nothing(x):
         upper_blueB3 = np.array([color2, 255, 255])
         #     print(i, 180, 0, i+range-180)
         #     print(i-range, i)
+
     else:
         lower_blueB1 = np.array([color2, saturation_th2, value_th2])
         upper_blueB1 = np.array([color2 + ranges, 255, 255])
