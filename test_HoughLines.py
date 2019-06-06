@@ -1,7 +1,7 @@
 import numpy as np
 import cv2
 
-img = cv2.imread("C:/fleshwoman/Object-detection/image/bookshelf_03.jpg")
+img = cv2.imread("C:/fleshwoman/Object-detection/image/books.jpg")
 img_original = img.copy()
 #1. GrayScale로 바꾸기
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)

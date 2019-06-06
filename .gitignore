@@ -106,3 +106,8 @@ venv.bak/
 
 # heavy files
 yolov3.weights
+
+#confidence file
+06617619_A technique to detect books from library bookshelf image.pdf
+07398501_bookSpine Segmentation for Various BookOrientations.pdf
+Book Spine Segmentation for Bookshelf Reorganization 2013.pdf
