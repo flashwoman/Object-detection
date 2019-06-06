@@ -10,6 +10,7 @@ import argparse
 import time
 import cv2
 import os
+from PIL import Image
 
 # construct the argument parse and parse the arguments
 ap = argparse.ArgumentParser()
@@ -40,6 +41,8 @@ net = cv2.dnn.readNetFromDarknet(configPath, weightsPath)
 
 # load our input image and grab its spatial dimensions
 image = cv2.imread(args["image"])
+#저장용
+img = Image.open(args["image"])
 (H, W) = image.shape[:2]
 
 # determine only the *output* layer names that we need from YOLO
@@ -95,6 +98,9 @@ for output in layerOutputs:
 			confidences.append(float(confidence))
 			classIDs.append(classID)
 
+
+
+
 # apply non-maxima suppression to suppress weak, overlapping bounding
 # boxes
 idxs = cv2.dnn.NMSBoxes(boxes, confidences, args["confidence"],
@@ -108,6 +114,10 @@ if len(idxs) > 0:
 		(x, y) = (boxes[i][0], boxes[i][1])
 		(w, h) = (boxes[i][2], boxes[i][3])
 
+		#이미지 저장
+		cropImage = img.crop((x, y, w, h)) # crop()의 파라미터는 (좌, 상, 우, 하) 위치를 갖는 튜플로 지정한다.
+		cropImage.save(f'C:/fleshwoman/Object-detection/output/Img{str(i)}.jpg')
+
 		# draw a bounding box rectangle and label on the image
 		color = [int(c) for c in COLORS[classIDs[i]]]
 		cv2.rectangle(image, (x, y), (x + w, y + h), color, 2)
@@ -115,8 +125,11 @@ if len(idxs) > 0:
 		cv2.putText(image, text, (x, y - 5), cv2.FONT_HERSHEY_SIMPLEX,
 			0.5, color, 2)
 
-print(boxes, len(boxes))
+
+
+print(boxes[0])
 # show the output image
 cv2.imshow("Image", image)
 cv2.waitKey(0)
+
 
