@@ -9,8 +9,8 @@
 
 
 ### (2) Detect Books
-1. [how-to-detect-a-book!](https://answers.opencv.org/question/69785/how-to-detect-a-book/)  
-    [answers]
+1. [how-to-detect-a-book!](https://answers.opencv.org/question/69785/how-to-detect-a-book/)
+* answers
     * [Homography](https://docs.opencv.org/2.4/doc/tutorials/features2d/feature_homography/feature_homography.html) ★★recommended★★  
         - [stackoverflow1](https://stackoverflow.com/questions/26615649/opencv-fitting-an-object-into-a-scene-using-homography-and-perspective-transfor)
         - [homography 공부1](https://yongchul-note.tistory.com/4)
@@ -19,8 +19,8 @@
     * [Fast Match](https://www.cv-foundation.org/openaccess/content_cvpr_2013/papers/Korman_FasT-Match_Fast_Affine_2013_CVPR_paper.pdf)
  
  2. [논문?](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.301.7242&rep=rep1&type=pdf)
-
-##2. Color Logics
+ 
+## 2. Color Logics
 1. [matplotlib color swatches](https://matplotlib.org/users/colormaps.html)
 2. [SOM](http://bl.ocks.org/nbremer/0d2e658691a4f93cad92)
 3. [컬러 배색 테크닉](https://m.blog.naver.com/qp_o_qp/221254371979)
