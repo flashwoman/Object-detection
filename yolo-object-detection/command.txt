@@ -1,0 +1,9 @@
+#학원
+python OpenCV_K-Means.py -i C:/Users/multicampus/fleshwoman/imgs/books.jpg -c 3
+
+python yolo.py -i C:/Users/multicampus/fleshwoman/imgs/books.jpg  -y C:/Users/multicampus/fleshwoman/yolo-object-detection/yolo-coco
+
+#그식이&레시기
+python OpenCV_K-Means.py -i C:/fleshwoman/Object-detection/imgs/books.jpg -c 3
+python yolo.py -i C:/fleshwoman/Object-detection-dev/imgs/books.jpg  -y C:/fleshwoman/Object-detection-dev/yolo-object-detection/yolo-coco
+
