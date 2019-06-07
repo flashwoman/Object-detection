@@ -11,7 +11,6 @@ import numpy as np
 import imutils
 import matplotlib.image as mpimg
 from PIL import Image
-import time
 
 
 # 받아온 사진 사이즈 고정시키기 (1100, 600)
@@ -76,24 +75,24 @@ cv.waitKey(0)
 cv.destroyAllWindows()
 
 
-minLineLength = 100
-maxLineGap = 10
-rho = 1
-theta = np.pi/180
-threshold = 190
-lines = cv2.HoughLines(opened, 1, np.pi/180, threshold)
-for line in lines:
-    for rho,theta in line:
-     a = np.cos(theta)
-     b = np.sin(theta)
-     x0 = a*rho
-     y0 = b*rho
-     x1 = int(x0 + 1000*(-b))
-     y1 = int(y0 + 1000*(a))
-     x2 = int(x0 - 1000*(-b))
-     y2 = int(y0 - 1000*(a))
-     cv2.line(image, (x1, y1), (x2, y2), (255, 0, 0), 2)
-     cropped = image[100:200, 500:640] 
+# minLineLength = 100
+# maxLineGap = 10
+# rho = 1
+# theta = np.pi/180
+# threshold = 190
+# lines = cv2.HoughLines(opened, 1, np.pi/180, threshold)
+# for line in lines:
+#     for rho,theta in line:
+#      a = np.cos(theta)
+#      b = np.sin(theta)
+#      x0 = a*rho
+#      y0 = b*rho
+#      x1 = int(x0 + 1000*(-b))
+#      y1 = int(y0 + 1000*(a))
+#      x2 = int(x0 - 1000*(-b))
+#      y2 = int(y0 - 1000*(a))
+#      cv2.line(image, (x1, y1), (x2, y2), (255, 0, 0), 2)
+#      cropped = image[100:200, 500:640]
 
 '''
 # 사진 크롭하기
@@ -102,6 +101,62 @@ cropImage = im.crop((100, 100, 150, 150)) # crop()의 파라미터는 (좌, 상,
 cropImage.save('python-crop.jpg')
 '''
 
+
+# Sobel 함수와 Harris Corner Detection 사용해서 thresh4(책장) 코너점 검출하기 (구현코드 --- 더 미세하게 조정할 수 있음)
+
+img_sobel_x = cv.Sobel(thresh4, cv.CV_32F, 1, 0)
+img_sobel_y = cv.Sobel(thresh4, cv.CV_32F, 0, 1)
+
+
+IxIx = img_sobel_x * img_sobel_x
+IyIy = img_sobel_y * img_sobel_y
+IxIy = img_sobel_x * img_sobel_y
+
+
+height, width = img.shape[:2]
+
+window_size = 5
+offset = int(window_size/2)
+
+r = np.zeros(thresh4.shape)
+
+start = time.process_time()
+for y in range(offset, height-offset):
+    for x in range(offset, width-offset):
+        window_IxIx = IxIx[y-offset:y+offset+1, x-offset:x+offset+1]
+        window_IyIy = IyIy[y-offset:y+offset+1, x-offset:x+offset+1]
+        window_IxIy = IxIy[y-offset:y+offset+1, x-offset:x+offset+1]
+
+        Mxx = window_IxIx.sum()
+        Myy = window_IyIy.sum()
+        Mxy = window_IxIy.sum()
+
+
+        det = Mxx*Myy - Mxy*Mxy
+        trace = Mxx + Myy
+
+        r[y,x] = det - 0.04 * (trace ** 2)
+
+
+cv.normalize(r,r,0.0,1.0,cv.NORM_MINMAX)
+
+for y in range(offset, height-offset):
+    for x in range(offset, width-offset):
+        if r[y, x] > 0.4:
+            img.itemset((y, x, 0), 0)
+            img.itemset((y, x, 1), 0)
+            img.itemset((y, x, 2), 255)
+
+
+end = time.process_time()
+print(end-start)
+
+cv.imshow("original", img)
+cv.waitKey(0)
+
+# images_combiend 파일 저장하기
+path = "C:/Users/DELL/PycharmProjects/Object-detection/image/images_thresh4_Point.jpg"
+cv.imwrite(path, img)
 
 
 
