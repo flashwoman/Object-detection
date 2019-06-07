@@ -8,13 +8,13 @@
 
 import cv2 as cv
 import numpy as np
-import imutils
 import matplotlib.image as mpimg
 from PIL import Image
 
+
 # 받아온 사진 사이즈 고정시키기 (1100, 600)
 size = (900, 600)
-path = "C:/Users/DELL/PycharmProjects/Object-detection/image/bookshelf_04.jpg"
+path = "C:/Users/DELL/PycharmProjects/Object-detection/image/books.jpg"
 img = Image.open(path)
 resized_image = img.resize(size)
 
@@ -36,9 +36,9 @@ cv.waitKey(0)
 
 # 5가지 threshold 방법
 ret,thresh1 = cv.threshold(img_gray,127,255,cv.THRESH_BINARY)
-ret,thresh2 = cv.threshold(img_gray,127,255,cv.THRESH_BINARY_INV)
+ret,thresh2 = cv.threshold(img_gray,127,255,cv.THRESH_BINARY_INV) # 책 아웃라인 검출
 ret,thresh3 = cv.threshold(img_gray,127,255,cv.THRESH_TRUNC)
-ret,thresh4 = cv.threshold(img_gray,127,255,cv.THRESH_TOZERO)
+ret,thresh4 = cv.threshold(img_gray,127,255,cv.THRESH_TOZERO) # 책장 프레임 검출
 ret,thresh5 = cv.threshold(img_gray,127,255,cv.THRESH_TOZERO_INV)
 
 # resize each threshes
@@ -61,29 +61,37 @@ images_row2 = np.hstack([thresh3, thresh4, thresh5])
 # print(images_row1.shape)
 # print(images_row2.shape)
 
-
 images_combined = np.vstack((images_row1, images_row2))
 
-# images_combined_resized = cv.resize(images_combined, (400, -1))
+# images_combiend 파일 저장하기
+path = "C:/Users/DELL/PycharmProjects/Object-detection/image/images_combined.jpg"
+cv.imwrite(path, images_combined)
+
+# window에 맞는 크기로 창 띄우기 (cv.WINDOW_NORMAL)
 cv.namedWindow('Images', cv.WINDOW_NORMAL)
 cv.imshow('Images', images_combined)
 cv.waitKey(0)
 cv.destroyAllWindows()
 
-# images_combiend 파일 저장하기
-img = Image.open(path)
-path = "C:/Users/DELL/PycharmProjects/Object-detection/image/images_combiend.jpg"
-img.save(path)
 
-# def draw_graph(x, y):
-#     plt.plot(x, y, marker='o')
-#     plt.xlabel('Distance in meters')
-#     plt.ylabel('Gravitational force in newtons')
-#     plt.title('Gravitational force and distance')
-#
-#     fig = plt.gcf() #변경한 곳
-#     plt.show()
-#     fig.savefig('GG.pdf') #변경한 곳
+# minLineLength = 100
+# maxLineGap = 10
+# rho = 1
+# theta = np.pi/180
+# threshold = 190
+# lines = cv2.HoughLines(opened, 1, np.pi/180, threshold)
+# for line in lines:
+#     for rho,theta in line:
+#      a = np.cos(theta)
+#      b = np.sin(theta)
+#      x0 = a*rho
+#      y0 = b*rho
+#      x1 = int(x0 + 1000*(-b))
+#      y1 = int(y0 + 1000*(a))
+#      x2 = int(x0 - 1000*(-b))
+#      y2 = int(y0 - 1000*(a))
+#      cv2.line(image, (x1, y1), (x2, y2), (255, 0, 0), 2)
+#      cropped = image[100:200, 500:640]
 
 '''
 # 사진 크롭하기
@@ -91,7 +99,6 @@ img.save(path)
 cropImage = im.crop((100, 100, 150, 150)) # crop()의 파라미터는 (좌, 상, 우, 하) 위치를 갖는 튜플로 지정한다.
 cropImage.save('python-crop.jpg')
 '''
-
 
 
 
