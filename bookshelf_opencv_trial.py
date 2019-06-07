@@ -11,6 +11,7 @@ import numpy as np
 import imutils
 import matplotlib.image as mpimg
 from PIL import Image
+import time
 
 
 # 받아온 사진 사이즈 고정시키기 (1100, 600)
@@ -157,6 +158,7 @@ cv.waitKey(0)
 # images_combiend 파일 저장하기
 path = "C:/Users/DELL/PycharmProjects/Object-detection/image/images_thresh4_Point.jpg"
 cv.imwrite(path, img)
+
 
 
 
