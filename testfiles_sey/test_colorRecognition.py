@@ -87,8 +87,13 @@ while (True):
     # ret, img_color = cap.read() # 이미지를 웹캠으로부터 캡쳐하도록 한다. 조명의 영향을 더욱 많이 받음
     path = "C:/Users/DELL/PycharmProjects/Object-detection/image/bookshelf_04.jpg"
     img_color = cv.imread(path, cv.IMREAD_COLOR)
+    cv.imshow('origin', img_color)
+    cv.waitKey(0)
+
     height, width = img_color.shape[:2]
     img_color = cv.resize(img_color, (width, height), interpolation=cv.INTER_AREA)
+    cv.imshow('resized', img_color)
+    cv.waitKey(0)
 
     # 원본 영상을 HSV 영상으로 변환합니다.
     img_hsv = cv.cvtColor(img_color, cv.COLOR_BGR2HSV)
@@ -100,9 +105,9 @@ while (True):
     img_mask = img_mask1 | img_mask2 | img_mask3
 
     # img_result의 노이즈 제거하기(모폴로지 연산 이용)
-    kernel = np.ones((11, 11), np.unit8)
+    kernel = np.ones((11, 11), np.int8)#, np.unit8)
     img_mask = cv.morphologyEx(img_mask, cv.MORPH_OPEN, kernel)
-    img_mask = cv.morphologyEx(img_mask, cv_MORPH_CLOSE, kernel)
+    img_mask = cv.morphologyEx(img_mask, cv.MORPH_CLOSE, kernel)
 
     # 마스크 이미지로 원본 이미지에서 범위값에 해당되는 영상 부분을 획득합니다.
     img_result = cv.bitwise_and(img_color, img_color, mask=img_mask)
@@ -110,11 +115,11 @@ while (True):
     # 물체 위치 추적 코드(Labeling 필요 -> 중심좌표, 영역크기, 외곽박스 좌표를 얻을 수 있음)
     numOfLabels, img_label, stats, centroids = cv.connectedComponentsWithStats(img_mask)
 
-    for idx, centroids in enumerate(centroids):
+    for idx, centroid in enumerate(centroids):
         if stats[idx][0] == 0 and stats[idx][0] == 0:
             continue
 
-        if np.any(np.isnan(centroids)):
+        if np.any(np.isnan(centroid)):
             continue
 
         x, y, width, height, area = stats[idx]
