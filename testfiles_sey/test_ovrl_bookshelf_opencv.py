@@ -14,7 +14,7 @@ from PIL import Image
 
 # 받아온 사진 사이즈 고정시키기 (1100, 600)
 size = (900, 600)
-path = "C:/Users/DELL/PycharmProjects/Object-detection/image/books.jpg"
+path = "C:/Users/DELL/PycharmProjects/Object-detection/image/real_bookshelf_02.jpg"
 img = Image.open(path)
 resized_image = img.resize(size)
 

@@ -19,6 +19,7 @@ img_gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
 
 # 이미지 이진화시키기
 ret,img_binary = cv.threshold(img_gray, 127, 255, cv.THRESH_BINARY_INV|cv.THRESH_OTSU) # 주의 : 배경이 검은색이고 검출도형이 하얀색이여야한다.
+# ret,img_binary = cv.threshold(img_gray, 127, 255, cv.THRESH_TOZERO_INV|cv.THRESH_OTSU) # 주의 : 배경이 검은색이고 검출도형이 하얀색이여야한다.
 cv.imshow('result', img_binary)
 cv.waitKey(0)
 
@@ -37,7 +38,7 @@ for cnt in contours:
     # print(size1)
 
     # 컨투어를 직선으로 근사화시키기 2
-    epsilon = 0.005 * cv.arcLength(cnt, True) # 몇%나 직선으로 근사화시킬 것인지 결정 (현재는 0.5%)
+    epsilon = 0.001 * cv.arcLength(cnt, True) # 몇%나 직선으로 근사화시킬 것인지 결정 (현재는 0.5%)
     approx = cv.approxPolyDP(cnt, epsilon, True)
 
     # 직선으로 근사화시킨 컨투어의 구성성분 개수 확인하기
@@ -72,7 +73,7 @@ for cnt in contours:
         setLabel(img, str(size2), cnt)
 
 
-# images_combiend 파일 저장하기
+# img 파일 저장하기
 path = "C:/Users/DELL/PycharmProjects/Object-detection/image/images_shapeDetected.jpg"
 cv.imwrite(path, img)
 

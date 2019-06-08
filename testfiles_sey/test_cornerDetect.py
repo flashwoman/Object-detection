@@ -23,7 +23,7 @@ ret,thresh4 = cv.threshold(img_gray,127,255,cv.THRESH_TOZERO) # 책장 프레임
 thresh4_array = np.float32(thresh4)
 thresh2_array = np.float32(thresh2)
 
-thresh_bookshelf = thresh4_array + thresh2_array # bookshelf만을 선명하게 검출하기 위해
+thresh_bookshelf = thresh2_array# + thresh4_array  # bookshelf만을 선명하게 검출하기 위해
 
 # print(img_dup)
 # print(img_dup.shape) # (600, 900, 3)
@@ -35,12 +35,14 @@ print(dst.max())
 dst = cv.dilate(dst,None)
 
 # Threshold for an optimal value, it may vary depending on the image.
-img[dst>0.3*dst.max()]=[0,0,255]
+img[dst>0.5*dst.max()]=[0,0,255]
 
 cv.imshow('dst',img)
 
 if cv.waitKey(0) & 0xff == 27:
     cv.destroyAllWindows()
+
+cv.destroyAllWindows()
 
 # corner point 찍힌 사진 저장하기
 path = "C:/Users/DELL/PycharmProjects/Object-detection/image/images_thresh4_Point_func.jpg"
