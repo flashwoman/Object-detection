@@ -48,7 +48,7 @@ blur_img = gaussian_blur(gray_img, 5)
 canny_img = canny(blur_img, 70, 210)
 
 ## 2-2 이제 텍스트를 뭉개버리자
-close_img = morphologyEx(canny_img, 10)
+close_img = morphologyEx(canny_img, 5)
 
 
 fin = np.hstack([blur_img, close_img])
