@@ -6,6 +6,7 @@
 1. [뭉치로 자르기](http://hk.voidcc.com/question/p-ezrgawjn-gx.html)  (검색어 - ROI(Region Of Interest) , mask, contour )
 2. [사각형으로 잘라서 저장](https://sosal.kr/1067)
 3. [threshold?](https://m.blog.naver.com/samsjang/220504782549) - opencv 필요 개념 공부하기 좋은 블로그!
+4. [selfDrivingCars](https://m.blog.naver.com/windowsub0406/220894160982) 
 
 
 ### (2) Detect Books

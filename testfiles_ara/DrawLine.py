@@ -12,6 +12,12 @@ gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 blur1 = cv2.GaussianBlur(gray, (5, 5), 0)
 #edge 보존 but 느리다. 화질 좋을때 text가 잘 잡힘
 blur2 = cv2.bilateralFilter(gray, 9, 75, 75)
+# src: 입력영상
+# d : 필터링에 이용하는 이웃한 픽셀의 지름을 정의, 불가능한 경우 sigmaSpace를 사용함.
+# sigmaColor : 컬러공간의 시그마공간 정의, 클수록 이웃한 픽셀과 기준색상의 영향이 커진다.
+# sigmaSpace : 시그마 필터를 조절한다, 값이 클수록 긴밀하게 주변 픽셀에 영향을 미친다. d > 0 이면 영향을 받지 않고, 그 이외에는 d 값에 비례한다.
+#
+
 blur3 = cv2.medianBlur(gray, 5)
 
 # blur = np.hstack([blur1, blur2, blur3])
@@ -59,9 +65,9 @@ lines1 = cv2.HoughLinesP(oc, 1, theta, threshold, 100, 5)
 lines2 = cv2.HoughLinesP(oc, 1, theta, threshold, 100, maxLineGap)
 lines3 = cv2.HoughLinesP(oc, 1, theta, 150, 100, 5)
 
-img1 = gray.copy()
-img2 = gray.copy()
-img3 = gray.copy()
+img1 = img.copy()
+img2 = img.copy()
+img3 = img.copy()
 
 
 for i in range(len(lines)):
@@ -82,7 +88,7 @@ for i in range(len(lines3)):
 
 
 
-row1 = np.hstack([gray, img1])
+row1 = np.hstack([img, img1])
 row2 = np.hstack([img2, img3])
 fin = np.vstack([row1, row2])
 
