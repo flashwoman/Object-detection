@@ -29,7 +29,7 @@ def findContours(img):
     return cv2.findContours(img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
 
-img_origin = cv2.imread('C:/fleshwoman/Object-detection/image/2sCuq.jpg')
+img_origin = cv2.imread('C:/fleshwoman/Object-detection/image/test.jpg')
 img = img_origin.copy()
 
 # resize
@@ -39,6 +39,8 @@ height, width= img.shape[:2]    # [height, width, channel] = img.shape
 
 #노이즈제거 및 edge
 gray_img = grayscale(img)
+cv2.imshow('gray', gray_img)
+cv2.waitKey(0)
 #blur_img1 = bilateralFilter(img, 5, 100)
 blur_img = gaussian_blur(img, 5)
 
@@ -47,18 +49,29 @@ cv2.imshow("blur_img", blur_img)
 cv2.waitKey(0)
 
 canny_img = canny(blur_img, 10, 80) # 작은게 더 좋으넹 (이진화기준 값을 너무 높게 주지 말 것!)
-
-cv2.imshow("canny_img", canny_img )
-cv2.waitKey(0)
+#
+# cv2.imshow("canny_img", canny_img )
+# cv2.waitKey(0)
 
 
 # canny = gaussian_blur(canny_img, 9)
-kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5 , 5))
+kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3,3))
+opened = cv2.morphologyEx(canny_img, cv2.MORPH_OPEN, kernel)
 closed = cv2.morphologyEx(canny_img, cv2.MORPH_CLOSE, kernel)
 
-cv2.imshow("closed", closed )
-cv2.waitKey(0)
+# cv2.namedWindow("closed", cv2.WINDOW_NORMAL)
+# cv2.imshow("closed", np.vstack([closed,opened]) )
+# cv2.waitKey(0)
 
+
+## canny -> sobel
+img_sobel_x = cv2.Sobel(canny_img, cv2.CV_64F, 1, 0, ksize=3)
+img_sobel_x = cv2.convertScaleAbs(img_sobel_x)
+print(type(img_sobel_x))
+
+
+cv2.imshow("sobel", img_sobel_x )
+cv2.waitKey(0)
 
 #################################################################################################################################3
 
@@ -71,6 +84,53 @@ cnts = imutils.grab_contours(cnts)
 
 print(len(cnts))
 # loop over the contours
+contours, hierarchy = cv2.findContours(img_sobel_x, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+img2 = img.copy()
+print('c:',  len(contours))
+# 검출된 컨투어를 직선으로 근사화시키기
+# for cnt in contours:
+cal_approx_y = []
+for cnt in contours:
+    # 컨투어 구성성분 개수 확인하기
+    size1 = len(cnt)
+    # print(size1)
+
+    # 컨투어를 직선으로 근사화시키기 2
+    epsilon = 0.01 * cv2.arcLength(cnt, True) # 몇%나 직선으로 근사화시킬 것인지 결정 (현재는 0.5%)
+    approx = cv2.approxPolyDP(cnt, epsilon, True)
+
+    # 직선으로 근사화시킨 컨투어의 구성성분 개수 확인하기
+    size2 = len(approx)
+    # print(size2-size1) # 대부분 0 or (-) 값이면 직선 근사화가 잘 된 것으로 파악한다.
+
+    # 직선으로 근사화된 컨투어를 사진에 표시하기
+    cv2.line(img2, tuple(approx[0][0]), tuple(approx[size2-1][0]), (0, 255, 0), 3) # 녹색선으로 표시
+
+    cal_approx_y.append(approx[size2-1][0][1] - approx[0][0][1])
+
+    # if (int(cal_approx_y) >= height/2) :
+    #     print(approx, cal_approx_y)
+    #     print("**********************************************")
+    #     for k in range(size2 - 1):
+    #         if len(approx) > height / 1.5:
+    #             cv2.line(img2, tuple(approx[k][0]), tuple(approx[k + 1][0]), (0, 255, 0), 3)  # 녹색선으로 표시
+
+    # for k in range(size2-1):
+    #     if len(approx) > height/1.5:
+    #         cv2.line(img2, tuple(approx[k][0]), tuple(approx[k+1][0]), (0, 255, 0), 3) # 녹색선으로 표시
+
+# img_sobel_x = cv2.Sobel(canny_img, cv2.CV_64F, 1, 0, ksize=3)
+# img_sobel_x = cv2.convertScaleAbs(img_sobel_x)
+# type(img_sobel_x)
+
+cv2.imshow('result', img2)
+cv2.waitKey(0)
+
+
+
+
+
+
 
 ########################################### contour 검출 #########################
 #
@@ -102,7 +162,7 @@ print(len(cnts))
 
 zero = np.zeros(img.shape)
 img_Area = height * width
-
+m = []
 for c in cnts:
 
     peri = cv2.arcLength(c, True)   # 둘레
@@ -113,11 +173,14 @@ for c in cnts:
 
     x, y, w, h = cv2.boundingRect(c)
 
-    if   h < height / 2 :
+    if  h < height / 2 :
         continue
 
+    m.append(h)
     cv2.rectangle(img, (x, y), (x + w, y + h), (3, 255, 4), 2)
 
+print( np.mean(m) )
+var = np.mean(m)
 cv2.imshow("image", img)
 cv2.waitKey(0)
 
@@ -129,10 +192,10 @@ theta = np.pi/180
 
 # 이미지에 따라 다름..
 # test.jpg, canny_img는 165가 적당.
-threshold = 165
+threshold = int(var/2.5)
 
 
-lines = cv2.HoughLines(canny_img, 1, theta, threshold)
+lines = cv2.HoughLines(img_sobel_x, 1, theta, threshold)
 
 for line in lines:
 
@@ -149,7 +212,7 @@ for line in lines:
      y2 = int(y0 - 1000*(a))
 
      if ( abs(x2 - x1) < width/ 9) :
-         print(x1, y1,x2, y2)
+         #print(x1, y1,x2, y2)
          cv2.line(img, (x1, y1), (x2, y2), (255, 0, 0), 2)
      #cropped = img[100:200, 500:640]
 
