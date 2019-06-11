@@ -28,14 +28,14 @@ print('hsv: ', hsv)
 import cv2
 
 img_color = cv2.imread('image.jpg') # color 검출할 이미지
-height, width = img_colorshape[:2]
+height, width = img_color.shape[:2]
 
 img_hsv = cv2.cvtColor(img_color, cv2.COLOR_BGR2HSV)
 
 # 범위를 정하여 hsv 이미지에서 원하는 색영역을 binary 이미지로 생성
 lower_blue = (120-10, 30, 30) # sv : 너무 어두워서 검은색으로 보이는 영역과 너무 밝아 하얀색으로 보이는 영역을 제외시켜줌 (30, 30)
 upper_blue = (120+10, 255, 255)
-img_mask = cv2.inRange(img_hsv, lower_bue, upper_blue) # 앞에서 정한 범위값을 사용하여 바이너리 이미지를 얻는다
+img_mask = cv2.inRange(img_hsv, lower_blue, upper_blue) # 앞에서 정한 범위값을 사용하여 바이너리 이미지를 얻는다
     # 범위내의 픽셀들을 흰색이 되고, 나머지 픽셀들을 검은색으로 추출된다.
 
 img_result = cv2.bitwise_and(img_color, img_color, mask=img_mask) # 바이너리이미지를 마스크로 사용하여 범위값의 컬러를 선택

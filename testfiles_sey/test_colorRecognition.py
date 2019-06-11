@@ -105,7 +105,9 @@ while (True):
     img_mask = img_mask1 | img_mask2 | img_mask3
 
     # img_result의 노이즈 제거하기(모폴로지 연산 이용)
-    kernel = np.ones((11, 11), np.int8)#, np.unit8)
+    # kernel = np.ones((3, 3), np.uint8)
+    kernel = cv.getStructuringElement(cv.MORPH_ELLIPSE, (5,5))
+
     img_mask = cv.morphologyEx(img_mask, cv.MORPH_OPEN, kernel)
     img_mask = cv.morphologyEx(img_mask, cv.MORPH_CLOSE, kernel)
 
@@ -122,7 +124,7 @@ while (True):
         if np.any(np.isnan(centroid)):
             continue
 
-        x, y, width, height, area = stats[idx]
+        x, y, width, height, area = stats[idx] # 사각영역
         centerX, centerY = int(centroid[0]), int(centroid[1])
 
         if area > 50:  # 노이즈로 인해 검출된 작은 물체를 제거하기 위해 물체의 크기가 50 이상인 경우만 반환하기 (테스트하면서 조절필요)
