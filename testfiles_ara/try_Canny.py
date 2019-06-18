@@ -28,7 +28,7 @@ def findContours(img):
     return cv2.findContours(img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
 
-img_origin = cv2.imread('C:/fleshwoman/Object-detection/image/test.jpg')
+img_origin = cv2.imread('C:/fleshwoman/Object-detection/testfiles_ara/20190617_trial/real_bookshelf_02_fin_36.jpg')
 img = img_origin.copy()
 #height, width, channel= img.shape
 height, width= img.shape[:2]
@@ -84,10 +84,4 @@ cv2.destroyAllWindows()
 
 
 
-################### Output ####################
-fin = np.hstack([img_origin, res])
-cv.namedWindow('fin', cv.WINDOW_NORMAL)
-cv.imshow("fin", fin )
-cv.waitKey(0)
-cv.destroyAllWindows()
 

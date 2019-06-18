@@ -91,7 +91,7 @@ cv.setMouseCallback('img_color_morphed', mouse_callback)
 
 while (True):
     # ret, img_color = cap.read() # 이미지를 웹캠으로부터 캡쳐하도록 한다. 조명의 영향을 더욱 많이 받음
-    path = "C:/Users/DELL/PycharmProjects/Object-detection/image/bookshelf_03.jpg"
+    path = "C:/fleshwoman/Object-detection/image/real_bookshelf_02.jpg"
     img_color = cv.imread(path, cv.IMREAD_COLOR)
     # cv.imshow('origin', img_color)
     # cv.waitKey(0)
@@ -123,14 +123,14 @@ while (True):
     cv.namedWindow('inv_mask', cv.WINDOW_NORMAL)
     cv.imshow('inv_mask', img_inv_mask) # 반전마스크를 이용해 책만 추출하기
     # 책장추출 마스크 저장하기
-    path = "C:/Users/DELL/PycharmProjects/Object-detection/image/img_bookshelf_mask.jpg"
+    path = "C:/fleshwoman/Object-detection/testfiles_ara/0618/img/img_book_mask.jpg"
     cv.imwrite(path, img_mask)
 
     # [sub] img_inv_mask로 책만 png로 추출하기
     img_book_only = cv.bitwise_and(img_color, img_color, mask=img_inv_mask)
     cv.namedWindow('img_book_only', cv.WINDOW_NORMAL)
     cv.imshow('img_book_only', img_book_only)
-    path = "C:/Users/DELL/PycharmProjects/Object-detection/image/img_book_only.jpg"
+    path = "C:/fleshwoman/Object-detection/testfiles_ara/0618/img/img_book_only.jpg"
     cv.imwrite(path, img_book_only)
 
     # 마스크 이미지로 원본 이미지에서 범위값에 해당되는 책장 부분을 획득합니다.
@@ -154,7 +154,7 @@ while (True):
             cv.rectangle(img_color, (x, y), (x + width, y + height), (0, 0, 255))  # 사각형으로 물체 잡아주기
 
     cv.imshow('img_color_morphed', img_result)
-    path = "C:/Users/DELL/PycharmProjects/Object-detection/image/img_color_morphed.jpg"
+    path = "C:/fleshwoman/Object-detection/testfiles_ara/0618/img/img_color_morphed.jpg"
     cv.imwrite(path, img_result)
 
     # ESC 키누르면 종료
