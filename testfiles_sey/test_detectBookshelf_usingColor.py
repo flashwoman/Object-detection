@@ -15,7 +15,7 @@ def nothing(x):
     pass
 
 # 마우스이벤트를 감지할 윈도우 생성
-cv.namedWindow('img_color_morphed')
+cv.namedWindow('img_color_morphed', cv.WINDOW_NORMAL)
 # cv.createTrackbar('threshold', 'img_color_morphed', 0, 255, nothing)
 # cv.setTrackbarPos('threshold', 'img_color_morphed', 50)
 
@@ -51,8 +51,6 @@ def mouse_callback(event, x, y, flags, param):
             upper_color2 = np.array([hsv[0], 255, 255])
             lower_color3 = np.array([hsv[0], threshold, threshold])
             upper_color3 = np.array([hsv[0] + 10, 255, 255])
-            #     print(i-10+180, 180, 0, i)
-            #     print(i, i+10)
 
         elif hsv[0] > 170: # 차가운 빨강에 가까운 컬러
             print("case2")
@@ -62,8 +60,6 @@ def mouse_callback(event, x, y, flags, param):
             upper_color2 = np.array([hsv[0] + 10 - 180, 255, 255])
             lower_color3 = np.array([hsv[0] - 10, threshold, threshold])
             upper_color3 = np.array([hsv[0], 255, 255])
-            #     print(i, 180, 0, i+10-180)
-            #     print(i-10, i)
 
         else: # 10 < hsv[0] < 170 : 빨강이 아닌 나머지 컬러
             print("case3")
@@ -95,7 +91,7 @@ cv.setMouseCallback('img_color_morphed', mouse_callback)
 
 while (True):
     # ret, img_color = cap.read() # 이미지를 웹캠으로부터 캡쳐하도록 한다. 조명의 영향을 더욱 많이 받음
-    path = "C:/Users/DELL/PycharmProjects/Object-detection/image/bookshelf_04.jpg"
+    path = "C:/Users/DELL/PycharmProjects/Object-detection/image/bookshelf_03.jpg"
     img_color = cv.imread(path, cv.IMREAD_COLOR)
     # cv.imshow('origin', img_color)
     # cv.waitKey(0)
@@ -121,8 +117,10 @@ while (True):
 
     img_mask = cv.morphologyEx(img_mask, cv.MORPH_OPEN, kernel)
     img_mask = cv.morphologyEx(img_mask, cv.MORPH_CLOSE, kernel)
+    cv.namedWindow('mask', cv.WINDOW_NORMAL)
     cv.imshow('mask', img_mask)
     img_inv_mask = cv.bitwise_not(img_mask)
+    cv.namedWindow('inv_mask', cv.WINDOW_NORMAL)
     cv.imshow('inv_mask', img_inv_mask) # 반전마스크를 이용해 책만 추출하기
     # 책장추출 마스크 저장하기
     path = "C:/Users/DELL/PycharmProjects/Object-detection/image/img_bookshelf_mask.jpg"
@@ -130,13 +128,14 @@ while (True):
 
     # [sub] img_inv_mask로 책만 png로 추출하기
     img_book_only = cv.bitwise_and(img_color, img_color, mask=img_inv_mask)
-    cv.imshow("img_book_only", img_book_only)
-    path = "C:/Users/DELL/PycharmProjects/Object-detection/image/img_book_only.png"
+    cv.namedWindow('img_book_only', cv.WINDOW_NORMAL)
+    cv.imshow('img_book_only', img_book_only)
+    path = "C:/Users/DELL/PycharmProjects/Object-detection/image/img_book_only.jpg"
     cv.imwrite(path, img_book_only)
 
 
 
-# 마스크 이미지로 원본 이미지에서 범위값에 해당되는 책장 부분을 획득합니다.
+    # 마스크 이미지로 원본 이미지에서 범위값에 해당되는 책장 부분을 획득합니다.
     img_result = cv.bitwise_and(img_color, img_color, mask=img_mask)
 
     # 물체 위치 추적 코드(Labeling 필요 -> 중심좌표, 영역크기, 외곽박스 좌표를 얻을 수 있음)
