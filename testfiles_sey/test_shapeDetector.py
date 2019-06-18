@@ -2,7 +2,6 @@
 # Reference Code <https://webnautes.tistory.com/1296>
 import cv2 as cv
 
-
 def setLabel(image, str, contour):
     (text_width, text_height), baseline = cv.getTextSize(str, cv.FONT_HERSHEY_SIMPLEX, 0.7, 1)
     x,y,width,height = cv.boundingRect(contour)
@@ -10,7 +9,6 @@ def setLabel(image, str, contour):
     pt_y = y+int((height + text_height)/2)
     cv.rectangle(image, (pt_x, pt_y+baseline), (pt_x+text_width, pt_y-text_height), (200,200,200), cv.FILLED)
     cv.putText(image, str, (pt_x, pt_y), cv.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,0), 1, 8)
-
 
 # 이미지 불러오기
 path = "C:/Users/DELL/PycharmProjects/Object-detection/image/test_shelf_resized.jpg"
@@ -23,16 +21,13 @@ ret,img_binary = cv.threshold(img_gray, 127, 255, cv.THRESH_BINARY_INV|cv.THRESH
 cv.imshow('result', img_binary)
 cv.waitKey(0)
 
-
 # 컨투어 검출하기
 contours, hierarchy = cv.findContours(img_binary, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
 # RETR_EXTERNAL : 외곽의 컨투어만 검출하도록 한다. / CHAIN_APPROX_SIMPLE : 검출되는 컨투어의 구성점 개수 줄이기(ex. 직선부분 양끝점만 검출하기)
 
 
-
 # 검출된 컨투어를 직선으로 근사화시키기
 for cnt in contours:
-
     # 컨투어 구성성분 개수 확인하기
     size1 = len(cnt)
     # print(size1)

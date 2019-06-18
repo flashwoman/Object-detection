@@ -18,7 +18,7 @@ def display(winname, img):
 # sep_coins = cv.imread('C:/fleshwoman/Object-detection/testfiles_ara\output/real_bookshelf_02_fin.jpg')
 
 
-img = cv.imread('C:/fleshwoman/Object-detection-dev/output/add_test.jpg')
+img = cv.imread('real_bookshelf_02_fin_36')
 
 #img = cv.imread('C:/dev/Object-detection/0618/img/img_book_only.png')
 #img = cv.imread('C:/fleshwoman/Object-detection/image/water_coins.jpg')
@@ -27,10 +27,10 @@ img = cv.imread('C:/fleshwoman/Object-detection-dev/output/add_test.jpg')
 sep_blur = cv.medianBlur(img, 5)
 #display('sep_blur',sep_blur)
 
-gray = cv.cvtColor(sep_blur, cv.COLOR_BGR2GRAY)
-display('gray',gray)
+#gray = cv.cvtColor(sep_blur, cv.COLOR_BGR2GRAY)
+#display('gray',gray)
 
-ret, thresh = cv.threshold(gray, 0, 255, cv.THRESH_BINARY +  cv.THRESH_OTSU)
+ret, thresh = cv.threshold(sep_blur, 127, 255, cv.THRESH_BINARY_INV +  cv.THRESH_OTSU)
 display('sep_thr',thresh)
 
 #NOISE REMOVAL (OPTIONAL)

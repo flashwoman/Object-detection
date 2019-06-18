@@ -2,10 +2,14 @@ import numpy as np
 import cv2 as cv
 from PIL import Image
 
-def thresholding():
-    img_o = cv.imread('C:/fleshwoman/Object-detection/image/real_bookshelf_02.jpg')
-    img = cv.imread('C:/fleshwoman/Object-detection/image/real_bookshelf_02.jpg', cv.IMREAD_GRAYSCALE)
 
+def display(winname, img):
+    cv.namedWindow(winname, cv.WINDOW_NORMAL)
+    cv.imshow(winname, img)
+    cv.waitKey(0)
+
+
+def thresholding(img):
     #전역 thresholding 적용
     ret, thr1 = cv.threshold(img, 127,255,cv.THRESH_BINARY)
 
@@ -48,37 +52,50 @@ def thresholding():
     images_row3 = np.hstack([thr4, thr5])
     images_row4 = np.hstack([thr6, thr7])
 
-    cv.namedWindow('img0', cv.WINDOW_NORMAL )
-    cv.imshow('img0', img_o)
-
+    cv.namedWindow('img', cv.WINDOW_NORMAL )
+    cv.imshow('img', images_row2)
 
     cv.namedWindow('img2', cv.WINDOW_NORMAL )
-    cv.imshow('img2', images_row2)
+    cv.imshow('img2', images_row3)
 
     cv.namedWindow('img3', cv.WINDOW_NORMAL )
-    cv.imshow('img3', images_row3)
+    cv.imshow('img3', images_row4)
 
-    cv.namedWindow('img4', cv.WINDOW_NORMAL )
-    cv.imshow('img4', images_row4)
-
-    fin1 = cv.addWeighted( src1=thr3, alpha=0.5, src2=thr6, beta=0.5, gamma=0 )
-    #파일저장
-    path = "real_bookshelf_02_fin_36.jpg"
-    cv.imwrite(path, fin1)
-
-    fin2 = cv.addWeighted( src1=thr3, alpha=0.5, src2=thr4, beta=0.5, gamma=0 )
-    #파일저장
-    path = "real_bookshelf_02_fin_34.jpg"
-    cv.imwrite(path, fin2)
-
+    fin2 = cv.addWeighted( src1=thr1, alpha=0.5, src2=thr6, beta=0.5, gamma=0 )
     cv.namedWindow('fin2', cv.WINDOW_NORMAL)
     cv.imshow('fin2', fin2)
     cv.waitKey(0)
     cv.destroyAllWindows()
 
+    return fin2
+
+    #파일저장
+    # path = "C:/fleshwoman/Object-detection-dev/output/real_bookshelf_02_fin.jpg"
+    # cv.imwrite(path, fin2)
+
+
+def contour(img, img_o):
+    org = img_o.copy()
+    ex_cnts = np.zeros(img.shape)
+    img, contours, hierarchy = cv.findContours(img, cv.RETR_CCOMP, cv.CHAIN_APPROX_SIMPLE)
+    print(len(contours))
+
+    for i in range(len(contours)):
+        if hierarchy[0][i][3] != -1 : #EXTERNAL
+            cv.drawContours(org, contours[i],  -1, (127,127,127), 3)
+    display('ex_cnts', org)
+
+
+def main():
+
+    img_o = cv.imread('C:/fleshwoman/Object-detection-dev/output/real_bookshelf_02_fin.jpg')
+    display('img_o', img_o)
+    img = cv.imread('C:/fleshwoman/Object-detection-dev/output/real_bookshelf_02_fin.jpg', cv.IMREAD_GRAYSCALE)
+    thr = thresholding(img)
+    print(thr.shape)
+    contour(thr, img_o)
 
 
 
-
-
-thresholding()
+if __name__ == "__main__":
+    main()

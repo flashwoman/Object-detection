@@ -133,8 +133,6 @@ while (True):
     path = "C:/Users/DELL/PycharmProjects/Object-detection/image/img_book_only.jpg"
     cv.imwrite(path, img_book_only)
 
-
-
     # 마스크 이미지로 원본 이미지에서 범위값에 해당되는 책장 부분을 획득합니다.
     img_result = cv.bitwise_and(img_color, img_color, mask=img_mask)
 
