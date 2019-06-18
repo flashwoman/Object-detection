@@ -4,7 +4,9 @@
 
 **Goal : HSV 범위 자동화하기**
 
-[Reference Page](# Reference Page : https://webnautes.tistory.com/1246)
+[Reference Page :  색상추출](# Reference Page : https://webnautes.tistory.com/1246)
+
+[Reference Page : HSV 범위설정에 관하여](<https://bradbury.tistory.com/64>)
 
 
 
