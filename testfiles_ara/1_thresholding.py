@@ -3,7 +3,7 @@ import cv2 as cv
 from PIL import Image
 
 def thresholding():
-    img = cv.imread('C:/fleshwoman/Object-detection/image/books.jpg', cv.IMREAD_GRAYSCALE)
+    img = cv.imread('C:/fleshwoman/Object-detection/image/books2.jpg', cv.IMREAD_GRAYSCALE)
 
     #전역 thresholding 적용
     ret, thr1 = cv.threshold(img, 127,255,cv.THRESH_BINARY)

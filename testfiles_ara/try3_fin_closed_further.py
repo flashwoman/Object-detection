@@ -145,7 +145,7 @@ cv2.waitKey(0)
 #     # https://m.blog.naver.com/samsjang/220516822775 : 두번째 인자의 값을 기준으로 contour를 따라 대략적인 도형을 만들어줌
 #     #approx = cv2.approxPolyDP(c, 0.01 * peri, True) # 0.01이 적당 (test.jpg 기준)
 #
-#     cv2.drawContours(zero,cnts,-1, (255,255,255), 1)
+#     cv2.drawContours(zero, cnts, -1, (255,255,255), 1)
 #
 #     if ( len(approx) >=8 )  :
 #         print(peri, area)
