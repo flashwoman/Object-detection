@@ -71,6 +71,7 @@ def watershed(img):
     ret, markers = cv.connectedComponents(sure_fg)
     # Add one to all labels so that sure background is not 0, but 1
     markers = markers + 1
+
     # Now, mark the region of unknown with zero
     markers[unknown == 255] = 0
     display('unknown', unknown)
