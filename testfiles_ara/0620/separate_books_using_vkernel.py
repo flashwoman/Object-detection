@@ -10,13 +10,6 @@ def display(winname, img):
     cv.waitKey(0)
 
 
-def contour(img, img_o):
-    contours, hierarchy = cv.findContours(markers.copy(), cv.RETR_CCOMP, cv.CHAIN_APPROX_SIMPLE)
-    for i in range(len(contours)):
-        if hierarchy[0][i][3] == -1:
-            cv.drawContours(img, contours, i, (255, 0, 0), 1)
-
-    display('sep_coins', img)
 
 
 # def morphologyEx(img, row_size, col_size ):

@@ -37,6 +37,8 @@ display('sep_thr',thresh)
 kernel = np.ones((3,3), np.uint8)
 opening = cv.morphologyEx(thresh, cv.MORPH_OPEN, kernel, iterations=2)
 sure_bg = cv.dilate(opening, kernel, iterations=3)
+
+display('sure_bg',sure_bg)
 display('opening',opening)
 
 dist_transform = cv.distanceTransform(opening, cv.DIST_L2, 5)

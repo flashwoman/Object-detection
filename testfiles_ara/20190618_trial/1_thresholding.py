@@ -88,9 +88,9 @@ def contour(img, img_o):
 
 def main():
 
-    img_o = cv.imread('C:/fleshwoman/Object-detection-dev/output/real_bookshelf_02_fin.jpg')
+    img_o = cv.imread('C:/fleshwoman/Object-detection-dev/testfiles_ara/output/real_bookshelf_02_fin.jpg')
     display('img_o', img_o)
-    img = cv.imread('C:/fleshwoman/Object-detection-dev/output/real_bookshelf_02_fin.jpg', cv.IMREAD_GRAYSCALE)
+    img = cv.imread('C:/fleshwoman/Object-detection-dev/testfiles_ara/output/real_bookshelf_02_fin.jpg', cv.IMREAD_GRAYSCALE)
     thr = thresholding(img)
     print(thr.shape)
     contour(thr, img_o)

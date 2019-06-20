@@ -3,8 +3,8 @@ import cv2 as cv
 from PIL import Image
 
 def thresholding():
-    img_o = cv.imread('C:/fleshwoman/Object-detection/image/real_bookshelf_02.jpg', cv.IMREAD_LOAD_GDAL)
-    img = cv.imread('C:/fleshwoman/Object-detection/image/real_bookshelf_02.jpg', cv.IMREAD_GRAYSCALE)
+    img_o = cv.imread('C:/dev/Object-detection/testfiles_ara/0618/img/img_book_only.png', cv.IMREAD_LOAD_GDAL)
+    img = cv.imread('C:/dev/Object-detection/testfiles_ara/0618/img/img_book_only.png', cv.IMREAD_GRAYSCALE)
     # cv.IMREAD_LOAD_GDAL
     # real_bookshelf_02_fin_36.jpg
 
@@ -32,7 +32,7 @@ def thresholding():
     thr6 = cv.adaptiveThreshold(blur, 255, cv.ADAPTIVE_THRESH_MEAN_C, cv.THRESH_BINARY, 33, 5)
     thr7 = cv.adaptiveThreshold(blur, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY, 33, 2)
 
-    ret, thr8 = cv.threshold(img, 10, 255, cv.THRESH_TRUNC )
+    ret, thr8 = cv.threshold(img, 127, 200, cv.THRESH_TRUNC )
 
     res = np.hstack([thr6, thr8])
 
