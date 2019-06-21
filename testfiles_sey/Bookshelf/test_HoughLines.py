@@ -56,10 +56,10 @@
 import cv2
 import numpy as np
 
-img = cv2.imread('C:/fleshwoman/Object-detection/image/test.jpg')
-gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+img_color = cv2.imread('C:/Object-detection/image/test.jpg')
+img_gray = cv2.cvtColor(img_color,cv2.COLOR_BGR2GRAY)
 
-edges1 = cv2.Canny(gray,50,150,apertureSize = 3)
+edges1 = cv2.Canny(img_gray,50,150,apertureSize = 3)
 # edges2 = cv2.Canny(gray,10,150,apertureSize = 3)
 # edges3 = cv2.Canny(gray,50,300,apertureSize = 3) #No good 엄청 자잘함
 # edges4 = cv2.Canny(gray,50,150,apertureSize = 5)
