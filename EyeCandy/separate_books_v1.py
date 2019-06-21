@@ -72,7 +72,7 @@ def contours(img, img_color):
 
 def main():
     img = cv.imread('C:/flashwoman/Object-detection/EyeCandy/img/img_book_only.png')
-    img_org = img.copy()
+    img_org = cv.imread('C:/flashwoman/Object-detection/EyeCandy/img/bookshelf_04.jpg')
 
     # 전처리
     img = preprocessing(img)
