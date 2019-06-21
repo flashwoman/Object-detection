@@ -5,12 +5,15 @@
 **SOM : Self - Organizing Map**(자기조직화 지도)
 
 0. Reference Page Lists
-   - [0. ANN](<https://untitledtblog.tistory.com/141>)
-   - [1. 간략소개](<https://neosla.tistory.com/25>)
-   - [2. SOM_ratsgo's blog](<https://ratsgo.github.io/machine%20learning/2017/05/01/SOM/>)
-   - [3. 코드구현과정 reference](<https://untitledtblog.tistory.com/5>)
-   - [4. 기타 코드 레퍼런스 -1](<http://jaynewho.com/post/7>)
-   - 
+    - [0. ANN](<https://untitledtblog.tistory.com/141>)
+    - [1. 간략소개](<https://neosla.tistory.com/25>)
+    - [2. SOM_ratsgo's blog](<https://ratsgo.github.io/machine%20learning/2017/05/01/SOM/>)
+    - [3. 코드구현과정 reference](<https://untitledtblog.tistory.com/5>)
+    - [4. 기타 코드 레퍼런스 -1](<http://jaynewho.com/post/7>)
+
+
+
+<br>
 
 
 
@@ -19,6 +22,10 @@
 - **ANN**(Artificial Neural Network) 신경망 알고리즘
 - 비지도학습
 - 사용 : **Clustering** + Classification
+- 활용 
+  1. 구조탐색(Finding a Structure)
+  2. 차원축소(Dimension Reduction)
+  3. **시각화(Visualisation)**
 - SOM의 특징
   - Input 데이터들 사이의 위상을 잘 나타낸다
   - 잘 구별되지 않는 데이터간의 상관관계를 찾아낼 수 있다
@@ -57,6 +64,8 @@
 
 ### 결과값 : 고차원의 저차원화
 
+  
+
 - n차원 -> 저차원 :
   임의의 n차원 입력벡터가 들어왔을 때, 가장 가까운 격자벡터를 찾습니다.(**Winning Node**) --> 이 벡터에 대응되는 2차원상 격자에 해당 입력벡터를 할당하면 이것이 바로 군집화가 되는 것입니다.
 
@@ -65,6 +74,8 @@
     고차원공간의 원데이터가 25개 격자에 할당(군집화)되어 있고, 동일한 격자에 할당된 입력값끼리도 그 위치가 서로 다르게 임베딩 되어있음을 확인할 수 있다.
 
     ![img](http://i.imgur.com/EE8NF6J.png)
+
+      
 
 - Input Data 차원에 따른 결과값 도식화
 
@@ -92,13 +103,12 @@
 
    - 입력층 (input layer) : 입력 벡터 입력받는 층
 
-   - 경쟁층 (competitive layer) : 입력벡터의 특성에 따라 입력 벡터가 한 점으로 클러스터링 되는 층 
+   - 경쟁층 (competitive layer) : 입력벡터의 특성에 따라 입력 벡터가 특정 영역(node)으로 클러스터링 되는 층 
      __그럼 이게 중간에 위치되어있는건가....?_
-
-   - 가중치 (weight) : 인공신경망에서 가중치는 각 입력 값에 대한 입력 값의 중요도 값을 말한다.
 
    - 노드 (node) : 경쟁층에서 입력 벡터들이 서로의 유사성에 의해 모이는 하나의 **영역**
 
+   - 가중치 (weight) : 인공신경망에서 가중치는 각 입력 값에 대한 입력 값의 중요도 값을 말한다.
 
      ![img](https://t1.daumcdn.net/cfile/tistory/25321F4C568D1BA033)
 
@@ -143,7 +153,7 @@
 
 
      $w_{ij}(new) = w_{ij}(old) + \alpha(t)(x_i - w_{ij}(old))​$
-
+    
       $w_{ij}(new)$는 **새로운 가중치**, $w_{ij}(old)$는 이전 가중치를 뜻한다. 그리고 우변의 두번째 항에 있는 $\alpha(t)$는 **학습률**을 나타내며, 알고리즘을 설계할 때 정하는 값으로 알고리즘이 반복될 수록 값이 **작아진다**.
 
 
@@ -158,10 +168,9 @@
    [Reference Page](<https://untitledtblog.tistory.com/5>)
 
    - 입력벡터 (input data)
-     
+
 
      $$\left[\begin{array}{rrr}1&0&0&1\\0&0&1&1\\0&1&0&1\\0&0&1&0\end{array}\right]​$$
-     
 
    - 경쟁층 (competitive layer) : 노드의 수 **2** 
      (입력 벡터를 2개의 그룹으로 클러스터링 하기 때문)
@@ -217,27 +226,28 @@
 
 
      첫번째 노드의 가중치를 모두 변경하면 밑의 행렬식이 나온다.
-
+    
      $$\left[\begin{array}{rrr}0.8&0.1\\0.12&0.7\\0.24&0.8\\0.68&0.2\end{array}\right]$$
-     
+
 
      두번째 입력벡터에 대한 노드(2번째 노드)의 가중치를 모두 변경하면 밑의 행렬식이 나온다.
-
+    
      $$\left[\begin{array}{rrr}0.8&0.04\\0.12&0.28\\0.24&0.92\\0.68&0.68\end{array}\right]$$
-     
+
 
 
      세번째 입력벡터에 대한 노드(2번째 노드)의 가중치를 모두 변경하면 밑의 행렬식이 나온다.
-
+    
      $$\left[\begin{array}{rrr}0.8&0.016\\0.12&0.712\\0.24&0.368\\0.68&0.872\end{array}\right]$$
-     
+
 
 
      네번째 입력벡터에 대한 노드(2번째 노드)의 가중치를 모두 변경하면 밑의 행렬식이 나온다.
-
+    
      $$\left[\begin{array}{rrr}0.8&0.0064\\0.12&0.2848\\0.24&0.7472\\0.68&0.3488\end{array}\right]​$$
 
-     
+
+​     
 
    - 학습률 수정
 
@@ -259,11 +269,23 @@
 
 
 
+### Reference SOM Code
+
+[pymvpa SOM 코드](<http://www.pymvpa.org/examples/som.html>)
+
+[AI-Junkie's very simple tutorial](<http://www.ai-junkie.com/ann/som/som1.html>)
+
+
+
+<br>
+
+
+
 ### 아직 파악하지 못한 것들
 
 - [x] ~~역전파 알고리즘의 필요성(Backpropagation Algorithm) --> 필요없다~~
-
 - [ ] 어떻게 SOM을 double-layer화 시키지...?
+- [ ] Watershed Algorithm 어디에 쓸수있을까? [COCO1](<http://cocodataset.org/#explore>), [COCO2](<https://github.com/cocodataset/cocodataset.github.io>)처럼 보여주고싶은데
 
 
 
