@@ -10,7 +10,7 @@ from .Function.trace_object import trace_object
 
 cv.namedWindow('detect_color', cv.WINDOW_NORMAL)
 
-# img에서 찾을 sv범위(Trackbar)의 즉각적인 조절을 원할때 unhash
+# img에서 찾을 sv범위(Trackbar)의 즉각적인 조절을 원할때 un-hash
 # cv.createTrackbar('threshold', 'detect_color', 0, 255, nothing)
 # cv.setTrackbarPos('threshold', 'detect_color', 50)
 
