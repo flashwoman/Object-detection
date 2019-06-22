@@ -4,7 +4,9 @@ import numpy as np
 
 def trace_object(img_color, img_mask):
 
-    global numOfLabels, img_label, stats, centroids = cv.connectedComponentsWithStats(img_mask)
+    global numOfLabels, img_label, stats, centroids
+
+    centroids = cv.connectedComponentsWithStats(img_mask)
 
     for idx, centroid in enumerate(centroids):
 

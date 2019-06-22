@@ -36,7 +36,17 @@ cannied_sobel_united = cv.Canny(sobel_united, 150, 200)
 
 - **kernel**
   - size
+
   - kernel shape
+
+    ```python
+    # vertical kernel
+        v_kernel = np.ones((13, 3), np.uint8)
+        # morphologyEx
+        v_opening = cv.morphologyEx(img_color, cv.MORPH_OPEN, v_kernel, iterations=2)
+    ```
+
+    
 
 ```python
 # MorphologyEx (노이즈 제거하기)
@@ -66,5 +76,14 @@ ret,thresh5 = cv.threshold(img_gray,127,255,cv.THRESH_TOZERO_INV)
 
 
 
-### 6. cv.watershed()
+### 6. cv.bitwise_and() / cv.bitwise_or()
+
+```python
+bitwise_or = cv.bitwise_or(kernel_opening, kernel_opening_T )
+detected_books = cv.bitwise_and(img_color, img_color, mask=bitwise_or)
+```
+
+
+
+### 7. cv.watershed()
 
