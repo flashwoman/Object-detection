@@ -1,6 +1,8 @@
 import numpy as np
 import cv2 as cv
 import glob, os
+import csv
+
 
 
 
@@ -40,7 +42,7 @@ def contours(img, img_color):
     display("img_binary", img_binary)
 
     # 2. Contour 찾기
-    imgs, contours, hierarchy = cv.findContours(img_binary, cv.RETR_LIST, cv.CHAIN_APPROX_SIMPLE)
+    image, contours, hierarchy = cv.findContours(img_binary, cv.RETR_LIST, cv.CHAIN_APPROX_SIMPLE)
 
     # 3. 기존에 저장된 이미지 파일 삭제
     path = "C:/flashwoman/Object-detection/EyeCandy/books/"
@@ -80,6 +82,15 @@ def main():
     # contours
     img, rect = contours(img,img_org)
     print(rect)
+
+    # save to csv
+    csvData = rect
+    with open('C:/flashwoman/Object-detection/testfiles_sey/book_coordinate.csv', 'w') as csvFile:
+        writer = csv.writer(csvFile)
+        writer.writerows(csvData)
+    csvFile.close()
+
+    cv.destroyAllWindows()
 
 
 
